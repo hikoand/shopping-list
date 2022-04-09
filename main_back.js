@@ -1,5 +1,12 @@
 // 🤷‍♀️ 개선
 // 이벤트리스너가 항목마다 있음 -> 이벤트 위임
+// 클릭이벤트를 부모요소인 items에만 등록한 뒤,
+// 쓰레기통 아이콘이 클릭되었을 때 해당 Item을 찾아 삭제한다.
+
+// item 마다 고유한 id를 지정하여 할당
+// ( 글로벌 integer을 이용해 id 생성 )
+// 쓰레기통 아이콘애 id를 기억하게 한다.
+// 아이콘이 클릭되면 할당되어진 Id을 이용하여 해당 item을 찾아서 삭제한다.
 
 const items = document.querySelector('.items');
 const input = document.querySelector('.footer__input');
