@@ -34,30 +34,19 @@ function onAdd() {
 function createItem(text) {
   const itemRow = document.createElement('li');
   itemRow.setAttribute('class', 'item__row');
+  let id = 0; //실무에선 UUID 혹은 해쉬코드를 사용하는 것을 추천
+  itemRow.setAttribute('data-id', id);
 
-  const item = document.createElement('div');
-  item.setAttribute('class', 'item');
-
-  const name = document.createElement('span');
-  name.setAttribute('class', 'item__name');
-  name.innerText = text;
-  console.log(text);
-
-  const deletBtn = document.createElement('button');
-  deletBtn.setAttribute('class', 'item__delete');
-  deletBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-  deletBtn.addEventListener('click', () => {
-    items.removeChild(itemRow);
-  });
-
-  const itemDivider = document.createElement('div');
-  itemDivider.setAttribute('class', 'item__divider');
-
-  item.appendChild(name);
-  item.appendChild(deletBtn);
-
-  itemRow.appendChild(item);
-  itemRow.appendChild(itemDivider);
+  itemRow.innerHTML = `
+          <div class="item">
+            <span class="item__name">${text}</span>
+            <button class="item__delete">
+              <i class="fas fa-trash-alt" data-id=${id}></i>
+            </button>
+          </div>
+          <div class="item__divider"></div>
+  `;
+  id++;
   return itemRow;
 }
 
@@ -68,5 +57,22 @@ addBtn.addEventListener('click', () => {
 input.addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
     onAdd();
+  }
+});
+
+// 이벤트 위임
+items.addEventListener('click', (event) => {
+  // nodeName의 경우 다른 icon이 있을 수 있음
+  // if (event.target.nodeName === 'I') {
+  //   console.log('he');
+  // }
+
+  //dataset을 이용
+  const id = event.target.dataset.id;
+  if (id) {
+    // id 로 원하는 요소를 찾는다.
+    const toBeDeleted = document.querySelector(`.item__row[data-id="${id}"]`);
+    // 삭제한다
+    toBeDeleted.remove();
   }
 });
