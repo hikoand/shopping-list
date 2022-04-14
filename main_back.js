@@ -9,8 +9,14 @@
 // 아이콘이 클릭되면 할당되어진 Id을 이용하여 해당 item을 찾아서 삭제한다.
 
 const items = document.querySelector('.items');
+const form = document.querySelector('.new-form');
 const input = document.querySelector('.footer__input');
 const addBtn = document.querySelector('.footer__button');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  onAdd();
+});
 
 function onAdd() {
   const text = input.value;
@@ -50,34 +56,35 @@ function createItem(text) {
   return itemRow;
 }
 
-addBtn.addEventListener('click', () => {
-  onAdd();
-});
+// form태그 추가
+// addBtn.addEventListener('click', () => {
+//   onAdd();
+// });
 
-// kepress는 Deprecated 예정
-// keydown(키보드를 누른 순간 이벤트 발생),
-// keyup 으로 대체 (키보드를 누르다가 뗀 순간 이벤트 발생)
+// // kepress는 Deprecated 예정
+// // keydown(키보드를 누른 순간 이벤트 발생),
+// // keyup 으로 대체 (키보드를 누르다가 뗀 순간 이벤트 발생)
 
-// input.addEventListener('keypress', (event) => {
+// // input.addEventListener('keypress', (event) => {
+// //   if (event.key === 'Enter') {
+// //     onAdd();
+// //   }
+// // });
+
+// input.addEventListener('keydown', (event) => {
+//   // keyup이 되기 전에 이벤트 발생 -> 취소 X
+//   // if (event.key === 'a') {
+//   //   event.preventDefault();
+//   // }
+
+//   // 글자가 만들어지는 도중 이벤트를 무시 (한글 등)
+//   if (event.isComposing) {
+//     return;
+//   }
 //   if (event.key === 'Enter') {
 //     onAdd();
 //   }
 // });
-
-input.addEventListener('keydown', (event) => {
-  // keyup이 되기 전에 이벤트 발생 -> 취소 X
-  // if (event.key === 'a') {
-  //   event.preventDefault();
-  // }
-
-  // 글자가 만들어지는 도중 이벤트를 무시 (한글 등)
-  if (event.isComposing) {
-    return;
-  }
-  if (event.key === 'Enter') {
-    onAdd();
-  }
-});
 
 // 이벤트 위임
 items.addEventListener('click', (event) => {
